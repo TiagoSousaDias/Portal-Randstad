@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal_Randstad"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Portal Randstad" Height="720" Width="1920" Loaded="Window_Loaded">
+    <Window.Resources>
+        <local:BDA_DS x:Key="bDA_DS"/>
+    </Window.Resources>
     <Grid>
-        
     </Grid>
 </Window>
