@@ -150,6 +150,8 @@ namespace Portal_Randstad {
         
         private global::System.Data.DataRelation relationConcelhodadospess;
         
+        private global::System.Data.DataRelation relationdadostrab_dadospess;
+        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1115,6 +1117,7 @@ namespace Portal_Randstad {
             this.relationCampanhaVOCRel = this.Relations["CampanhaVOCRel"];
             this.relationDepartamentosVOCRel = this.Relations["DepartamentosVOCRel"];
             this.relationConcelhodadospess = this.Relations["Concelhodadospess"];
+            this.relationdadostrab_dadospess = this.Relations["dadostrab_dadospess"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1306,6 +1309,10 @@ namespace Portal_Randstad {
                         this.tabledadospess.ConcelhoColumn}, new global::System.Data.DataColumn[] {
                         this.tableConcelho.IdConcelhoColumn}, false);
             this.Relations.Add(this.relationConcelhodadospess);
+            this.relationdadostrab_dadospess = new global::System.Data.DataRelation("dadostrab_dadospess", new global::System.Data.DataColumn[] {
+                        this.tabledadostrab.IdDadosTrabColumn}, new global::System.Data.DataColumn[] {
+                        this.tabledadospess.IdDadosPessColumn}, false);
+            this.Relations.Add(this.relationdadostrab_dadospess);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15434,6 +15441,17 @@ namespace Portal_Randstad {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public dadostrabRow dadostrabRow {
+                get {
+                    return ((dadostrabRow)(this.GetParentRow(this.Table.ParentRelations["dadostrab_dadospess"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["dadostrab_dadospess"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsNomeCompNull() {
                 return this.IsNull(this.tabledadospess.NomeCompColumn);
             }
@@ -16677,6 +16695,17 @@ namespace Portal_Randstad {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetInicioRandCTRTNull() {
                 this[this.tabledadostrab.InicioRandCTRTColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public dadospessRow[] GetdadospessRows() {
+                if ((this.Table.ChildRelations["dadostrab_dadospess"] == null)) {
+                    return new dadospessRow[0];
+                }
+                else {
+                    return ((dadospessRow[])(base.GetChildRows(this.Table.ChildRelations["dadostrab_dadospess"])));
+                }
             }
         }
         
@@ -24689,11 +24718,18 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[1];
+            this._commandCollection = new global::System.Data.OleDb.OleDbCommand[2];
             this._commandCollection[0] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"SELECT IdDadosPess, NomeComp, NIF, NISS, CC, CCValid, Telefone, Telemovel, Email, EmailCorp, DataNSC, Morada, Localidade, Distrito, Concelho, CodPostal, Sexo, EstadoCivil, Habilitacoes, AreaAcademica, FormacoesAdicionais, Nacionalidade, N_Dependentes FROM dadospess";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = @"SELECT        dadospess.IdDadosPess, dadospess.NIF, dadostrab.CTRTActivo, dadostrab.PassPortal
+FROM            ((dadospess INNER JOIN
+                         colaborador ON dadospess.IdDadosPess = colaborador.IdColaborador) INNER JOIN
+                         dadostrab ON colaborador.IdColaborador = dadostrab.IdDadosTrab)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -24715,6 +24751,17 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual BDA_DS.dadospessDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            BDA_DS.dadospessDataTable dataTable = new BDA_DS.dadospessDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual BDA_DS.dadospessDataTable GetUserLogin() {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
             BDA_DS.dadospessDataTable dataTable = new BDA_DS.dadospessDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -35141,6 +35188,15 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateUpdatedRows(BDA_DS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._vinculoContratualTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.VinculoContratual.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._vinculoContratualTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._habilitacoesTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Habilitacoes.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -35174,6 +35230,15 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._semanaTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._dadostrabTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.dadostrab.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._dadostrabTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -35213,15 +35278,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._vinculoContratualTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.VinculoContratual.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._vinculoContratualTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._especialidadeTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.especialidade.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -35237,15 +35293,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._dadospessTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._direcoesTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.Direcoes.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._direcoesTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -35303,12 +35350,30 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
+            if ((this._direcoesTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.Direcoes.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._direcoesTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._pisosTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Pisos.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._pisosTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._prevensaoTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.prevensao.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._prevensaoTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -35339,30 +35404,21 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._prevensaoTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.prevensao.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._prevensaoTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._nacionalidadeTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.nacionalidade.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._nacionalidadeTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._acessosTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.acessos.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._acessosTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._motivoRescisaoTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.MotivoRescisao.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._motivoRescisaoTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -35390,15 +35446,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._funcao_appTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._dadostrabTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.dadostrab.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._dadostrabTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -35447,12 +35494,12 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._motivoRescisaoTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.MotivoRescisao.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+            if ((this._nacionalidadeTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.nacionalidade.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
-                    result = (result + this._motivoRescisaoTableAdapter.Update(updatedRows));
+                    result = (result + this._nacionalidadeTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -35475,6 +35522,14 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private int UpdateInsertedRows(BDA_DS dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._vinculoContratualTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.VinculoContratual.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._vinculoContratualTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._habilitacoesTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Habilitacoes.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -35504,6 +35559,14 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._semanaTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._dadostrabTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.dadostrab.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._dadostrabTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -35539,14 +35602,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._vinculoContratualTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.VinculoContratual.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._vinculoContratualTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._especialidadeTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.especialidade.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -35560,14 +35615,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._dadospessTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._direcoesTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.Direcoes.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._direcoesTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -35619,11 +35666,27 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
+            if ((this._direcoesTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.Direcoes.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._direcoesTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._pisosTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Pisos.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._pisosTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._prevensaoTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.prevensao.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._prevensaoTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -35651,27 +35714,19 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._prevensaoTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.prevensao.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._prevensaoTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._nacionalidadeTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.nacionalidade.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._nacionalidadeTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._acessosTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.acessos.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._acessosTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._motivoRescisaoTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.MotivoRescisao.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._motivoRescisaoTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -35696,14 +35751,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._funcao_appTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._dadostrabTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.dadostrab.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._dadostrabTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -35747,11 +35794,11 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._motivoRescisaoTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.MotivoRescisao.Select(null, null, global::System.Data.DataViewRowState.Added);
+            if ((this._nacionalidadeTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.nacionalidade.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
-                    result = (result + this._motivoRescisaoTableAdapter.Update(addedRows));
+                    result = (result + this._nacionalidadeTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -35781,11 +35828,11 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._motivoRescisaoTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.MotivoRescisao.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+            if ((this._nacionalidadeTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.nacionalidade.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
-                    result = (result + this._motivoRescisaoTableAdapter.Update(deletedRows));
+                    result = (result + this._nacionalidadeTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -35829,14 +35876,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._dadostrabTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.dadostrab.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._dadostrabTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._funcao_appTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.funcao_app.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -35861,27 +35900,19 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._motivoRescisaoTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.MotivoRescisao.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._motivoRescisaoTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._acessosTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.acessos.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._acessosTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._nacionalidadeTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.nacionalidade.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._nacionalidadeTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._prevensaoTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.prevensao.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._prevensaoTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -35909,11 +35940,27 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._prevensaoTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.prevensao.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._prevensaoTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._pisosTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Pisos.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._pisosTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._direcoesTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.Direcoes.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._direcoesTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -35965,14 +36012,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._direcoesTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.Direcoes.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._direcoesTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._dadospessTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.dadospess.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -35986,14 +36025,6 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._especialidadeTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._vinculoContratualTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.VinculoContratual.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._vinculoContratualTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }
@@ -36029,6 +36060,14 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._dadostrabTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.dadostrab.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._dadostrabTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._semanaTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Semana.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -36058,6 +36097,14 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._habilitacoesTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._vinculoContratualTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.VinculoContratual.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._vinculoContratualTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

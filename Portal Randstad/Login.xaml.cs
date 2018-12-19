@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,37 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Portal_Randstad.BDA_DS;
 
 namespace Portal_Randstad
 {
     /// <summary>
     /// Interaction logic for Login.xaml
     /// </summary>
-    public partial class Login : Page
+    public partial class Login : UserControl,ISwitchable
     {
         public Login()
         {
             InitializeComponent();
+        }
+
+        public void UtilizeState(object state)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            BDA_DSTableAdapters.dadospessTableAdapter da = new BDA_DSTableAdapters.dadospessTableAdapter();
+            DataTable log = da.GetUserLogin();
+            if(log.Select("NIF='"+ usertxt.Text +"' AND PassPortal='"+ passtxt.Password+"'").Count() > 0 )
+            {
+                Switcher.Switch(new MainMenu());
+            }
+            else
+            {
+                MessageBox.Show("ERROR");
+            }
         }
     }
 }

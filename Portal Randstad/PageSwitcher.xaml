@@ -1,14 +1,15 @@
-﻿<Window x:Class="Portal_Randstad.MainWindow"
+﻿<Window x:Class="Portal_Randstad.PageSwitcher"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal_Randstad"
         mc:Ignorable="d"
-        Title="Portal Randstad" Height="720" Width="1920" Loaded="Window_Loaded">
-    <Window.Resources>
-        <local:BDA_DS x:Key="bDA_DS"/>
-    </Window.Resources>
+        Title="Portal Randstad" Height="450" Width="800" WindowStyle="ThreeDBorderWindow">
+    <Window.Effect>
+        <DropShadowEffect/>
+    </Window.Effect>
     <Grid>
+        
     </Grid>
 </Window>
