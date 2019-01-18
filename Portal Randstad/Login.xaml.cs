@@ -36,13 +36,14 @@ namespace Portal_Randstad
         {
             BDA_DSTableAdapters.dadospessTableAdapter da = new BDA_DSTableAdapters.dadospessTableAdapter();
             DataTable log = da.GetUserLogin();
-            if(log.Select("NIF='"+ usertxt.Text +"' AND PassPortal='"+ passtxt.Password+"'").Count() > 0 )
+            if(log.Select("NIF='"+ usertxt.Text +"' AND PassPortal='"+ passtxt.Password+"' AND FKFuncao in (49)").Count() > 0 )
             {
+                Session.IsLogged = true;
                 Switcher.Switch(new MainMenu());
             }
             else
             {
-                MessageBox.Show("ERROR");
+                MessageBox.Show("Utilizador ou password incorrectos!");
             }
         }
     }

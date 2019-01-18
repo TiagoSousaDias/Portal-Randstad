@@ -24725,7 +24725,7 @@ namespace Portal_Randstad.BDA_DSTableAdapters {
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.OleDb.OleDbCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT        dadospess.IdDadosPess, dadospess.NIF, dadostrab.CTRTActivo, dadostrab.PassPortal
+            this._commandCollection[1].CommandText = @"SELECT        dadospess.IdDadosPess, dadospess.NIF, dadostrab.CTRTActivo, dadostrab.PassPortal, colaborador.FKFuncao
 FROM            ((dadospess INNER JOIN
                          colaborador ON dadospess.IdDadosPess = colaborador.IdColaborador) INNER JOIN
                          dadostrab ON colaborador.IdColaborador = dadostrab.IdDadosTrab)";

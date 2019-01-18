@@ -5,11 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Portal_Randstad"
         mc:Ignorable="d"
-        Title="Portal Randstad" Height="450" Width="800" WindowStyle="ThreeDBorderWindow">
-    <Window.Effect>
-        <DropShadowEffect/>
-    </Window.Effect>
-    <Grid>
-        
-    </Grid>
+        Title="Portal Randstad" Height="450" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+     TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+     TextElement.FontWeight="Regular"
+     TextElement.FontSize="13"
+     TextOptions.TextFormattingMode="Ideal"
+     TextOptions.TextRenderingMode="Auto"
+     Padding="0"
+     Background="{DynamicResource MaterialDesignPaper}"
+     FontFamily="{DynamicResource MaterialDesignFont}" WindowStyle="None"
+    AllowsTransparency="True"
+    ResizeMode="CanResizeWithGrip" MouseDown="Window_MouseDown">
+    
+    
 </Window>
